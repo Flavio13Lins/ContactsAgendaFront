@@ -1,34 +1,50 @@
 <template>
   <div class="contacts">
-    <div v-if="loading">
-      <h3>Loading...</h3>
-    </div>
-    <PrimeDataTable
-      v-else
-      :value="contacts"
-      responsiveLayout="scroll"
-      class="custom-datatable"
-    >
-      <PrimeColumn field="name" header="">
-        <template #body="slotProps">
-          <div
-            @click="openContactDetails(slotProps.data.id)"
-            class="contact-line"
-          >
-            <p>{{ slotProps.data.name }}</p>
-          </div>
-        </template>
-      </PrimeColumn>
-    </PrimeDataTable>
-    <div v-if="error">
-      <p>An error occurred: {{ error.message }}</p>
-      <PrimeButton
-        label="Refresh"
-        icon="pi pi-refresh"
-        @click="refreshContacts"
-        class="p-button-success"
-      />
-    </div>
+    <PrimePanel header="List" class="custom-panel">
+      <div v-if="loading">
+        <h3>Loading...</h3>
+      </div>
+      <div v-if="error">
+        <p>An error occurred: {{ error.message }}</p>
+        <PrimeButton
+          label="Refresh"
+          icon="pi pi-refresh"
+          @click="refreshContacts"
+          class="p-button-success"
+        />
+      </div>
+      <PrimeDataTable
+        v-else
+        :value="contacts"
+        responsiveLayout="scroll"
+        :rows="6"
+        paginator
+        :globalFilterFields="['name']"
+        paginatorTemplate="PrevPageLink CurrentPageReport NextPageLink"
+        currentPageReportTemplate=" Total of {totalRecords} Contacts "
+      >
+        <PrimeColumn field="name" header="">
+          <template #body="slotProps">
+            <div
+              @click="openContactDetails(slotProps.data.id)"
+              class="contact-line"
+            >
+              <p>{{ slotProps.data.name }}</p>
+            </div>
+          </template>
+        </PrimeColumn>
+        <PrimeColumn field="phone" header="">
+          <template #body="slotProps">
+            <div
+              @click="openContactDetails(slotProps.data.id)"
+              class="contact-phone"
+            >
+              <p>{{ slotProps.data.phone }}</p>
+            </div>
+          </template>
+        </PrimeColumn>
+      </PrimeDataTable>
+    </PrimePanel>
   </div>
 </template>
 
@@ -78,7 +94,14 @@ export default {
   justify-content: center;
 }
 .contact-line {
-  padding: 1rem;
+  padding: 1rem 0;
+  cursor: pointer;
+}
+.contact-phone {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  padding: 1rem 0;
   cursor: pointer;
 }
 </style>

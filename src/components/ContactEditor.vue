@@ -21,7 +21,7 @@
       <div class="p-card" v-if="contactId">
         <div>
           <label for="name">Name:</label>
-          <input
+          <PrimeInputText
             type="text"
             id="name"
             v-model="contact.name"
@@ -31,7 +31,7 @@
         </div>
         <div>
           <label for="phone">Phone:</label>
-          <input
+          <PrimeInputText
             type="text"
             id="phone"
             v-model="contact.phone"
@@ -42,7 +42,7 @@
         </div>
         <div>
           <label for="email">Email:</label>
-          <input
+          <PrimeInputText
             type="email"
             id="email"
             v-model="contact.email"
